@@ -1,0 +1,35 @@
+name: 'GitHub Contribution Wave Reveal'
+description: 'Generates an animated wave-like reveal SVG of your GitHub contributions graph.'
+author: 'Vu Duc Giang'
+inputs:
+  github_user_name:
+    description: 'The GitHub username to generate the graph for.'
+    required: true
+  output_path:
+    description: 'The target file path to save the generated SVG.'
+    required: false
+    default: 'profile/wave-commits.svg'
+  color_palette:
+    description: 'The color theme to use (cyberpunk, ocean, sunset, classic-green).'
+    required: false
+    default: 'cyberpunk'
+branding:
+  icon: 'activity'
+  color: 'purple'
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Run wave generator script
+      shell: bash
+      run: |
+        python "${{ github.action_path }}/generate_wave.py"
+      env:
+        GITHUB_USER_NAME: ${{ inputs.github_user_name }}
+        OUTPUT_PATH: ${{ inputs.output_path }}
+        COLOR_PALETTE: ${{ inputs.color_palette }}
+        GITHUB_TOKEN: ${{ github.token }}
