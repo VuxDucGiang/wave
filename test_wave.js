@@ -3,9 +3,9 @@ const path = require('path');
 
 // Theme definitions matching generate_wave.py
 const theme = {
-  bg: "#0b0f19",
-  border: "#1f2937",
-  colors: ["#161b22", "#1e3a8a", "#3b82f6", "#8b5cf6", "#ec4899"]
+  bg: "#000000",
+  border: "#262626",
+  colors: ["#161b22", "#404040", "#737373", "#a3a3a3", "#ffffff"]
 };
 
 // 4. Color Palette Mapping based on Contribution Count

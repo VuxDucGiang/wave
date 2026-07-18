@@ -50,6 +50,14 @@ THEMES = {
         "subtitle": "#8b949e",
         "label": "#8b949e",
         "colors": ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
+    },
+    "mono": {
+        "bg": "#000000",
+        "border": "#262626",
+        "title": "#ffffff",
+        "subtitle": "#a3a3a3",
+        "label": "#737373",
+        "colors": ["#161b22", "#404040", "#737373", "#a3a3a3", "#ffffff"]
     }
 }
 

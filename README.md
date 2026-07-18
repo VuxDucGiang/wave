@@ -76,7 +76,7 @@ After the workflow runs successfully, embed the image in your `README.md` file:
 | --- | --- | --- | --- |
 | `github_user_name` | The GitHub username to retrieve contribution data for. | **Yes** | N/A |
 | `output_path` | The path where the generated SVG file should be saved. | No | `profile/wave-commits.svg` |
-| `color_palette` | The color theme of the graph card (`cyberpunk`, `ocean`, `sunset`, `classic-green`). | No | `cyberpunk` |
+| `color_palette` | The color theme of the graph card (`cyberpunk`, `ocean`, `sunset`, `classic-green`, `mono`). | No | `cyberpunk` |
 
 ---
 
@@ -101,6 +101,11 @@ After the workflow runs successfully, embed the image in your `README.md` file:
 - Card Background: GitHub Dark (`#0d1117`)
 - Accent: Default Green tones
 - Color Steps: `#161b22` ➔ `#0e4429` ➔ `#006d32` ➔ `#26a641` ➔ `#39d353`
+
+### 5. Mono
+- Card Background: Pitch Black (`#000000`)
+- Accent: Grayscale (Black, Grays, and White)
+- Color Steps: `#161b22` ➔ `#404040` ➔ `#737373` ➔ `#a3a3a3` ➔ `#ffffff`
 
 ---
 
