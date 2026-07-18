@@ -10,9 +10,13 @@ inputs:
     required: false
     default: 'profile/wave-commits.svg'
   color_palette:
-    description: 'The color theme to use (cyberpunk, ocean, sunset, classic-green).'
+    description: 'The color theme to use (cyberpunk, ocean, sunset, classic-green, mono).'
     required: false
     default: 'cyberpunk'
+  animation_style:
+    description: 'The animation style (1 for continuous wave, 2 for discrete appearing loop).'
+    required: false
+    default: '1'
 branding:
   icon: 'activity'
   color: 'purple'
@@ -32,4 +36,5 @@ runs:
         GITHUB_USER_NAME: ${{ inputs.github_user_name }}
         OUTPUT_PATH: ${{ inputs.output_path }}
         COLOR_PALETTE: ${{ inputs.color_palette }}
+        ANIMATION_STYLE: ${{ inputs.animation_style }}
         GITHUB_TOKEN: ${{ github.token }}

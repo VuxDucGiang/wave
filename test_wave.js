@@ -8,6 +8,9 @@ const theme = {
   colors: ["#161b22", "#404040", "#737373", "#a3a3a3", "#ffffff"]
 };
 
+// 3. Animation style option
+const animationStyle = "2"; // Options: "1" (continuous diagonal wave), "2" (continuous horizontal fade)
+
 // 4. Color Palette Mapping based on Contribution Count
 function getColor(count) {
   const colors = theme.colors;
@@ -37,15 +40,9 @@ for (let w = 0; w < 53; w++) {
   weeks.push({ contributionDays });
 }
 
-// Generate SVG content
-const svg_width = 706;
-const svg_height = 108;
-
-let svg_content = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svg_width} ${svg_height}" width="100%" height="100%">
-  <style>
-    /* Keyframes for the wave sweep effect */
-    @keyframes wave-reveal {
-      0% {
+// Determine style settings
+let duration = "6s";
+let keyframes = `      0% {
         opacity: 0;
         transform: translateY(8px) scale(0.8);
       }
@@ -60,12 +57,37 @@ let svg_content = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svg_wi
       100% {
         opacity: 0;
         transform: translateY(8px) scale(0.8);
+      }`;
+
+if (animationStyle === "2") {
+  duration = "6s";
+  keyframes = `      0% {
+        opacity: 0;
       }
+      20% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }`;
+}
+
+const svg_width = 706;
+const svg_height = 108;
+
+let svg_content = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svg_width} ${svg_height}" width="100%" height="100%">
+  <style>
+    /* Keyframes for the wave sweep effect */
+    @keyframes wave-reveal {
+${keyframes}
     }
     
     .cell {
       opacity: 0;
-      animation: wave-reveal 6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+      animation: wave-reveal ${duration} cubic-bezier(0.16, 1, 0.3, 1) infinite;
       transform-box: fill-box;
       transform-origin: center;
     }
@@ -78,13 +100,13 @@ let svg_content = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svg_wi
 weeks.forEach((week, col_idx) => {
   week.contributionDays.forEach((day) => {
     const row_idx = day.weekday;
-    const delay = (col_idx + row_idx) * 0.06; // Diagonal delay starting from top-left (0,0)
+    const delay = (col_idx + row_idx) * 0.06;
     const count = day.contributionCount;
     const color = getColor(count);
-    
+
     const x_pos = 10 + col_idx * 13;
     const y_pos = 10 + row_idx * 13;
-    
+
     svg_content += `  <rect class="cell" x="${x_pos}" y="${y_pos}" width="10" height="10" rx="2" fill="${color}" style="animation-delay: ${delay.toFixed(2)}s;" />\n`;
   });
 });

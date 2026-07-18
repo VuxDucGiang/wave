@@ -1,21 +1,24 @@
 # GitHub Contribution Wave Reveal Action
 
-A GitHub Action that fetches your contribution calendar and generates a gorgeous SVG with a sweeping wave-reveal animation from left to right.
+A GitHub Action that fetches your contribution calendar and generates a gorgeous, background-free SVG containing only your contribution cells with a diagonal sweeping wave animation. 
 
-Perfect for making your GitHub Profile README look vibrant and alive!
+Perfect for blending seamlessly into your GitHub Profile README!
 
 ## Preview
 
-Here is an example of the generated SVG with the default **Cyberpunk** theme:
+Here is an example of the generated SVG with the **Mono** theme and transparent background:
 
-![Preview Example](./profile/wave-commits.svg)
+<div align="center">
+  <img src="./profile/wave-commits.svg" alt="Wave Commits Graph" width="800" />
+</div>
 
 ## Features
 
-- 🌊 **Sweeping Wave Reveal Effect**: Commits fade and slide up sequentially from left to right.
-- 🎨 **Multiple Premium Themes**: Customize the card design to fit your profile aesthetic.
-- 📅 **Dynamic Alignments**: Months and weekdays are automatically calculated and aligned, fading in sync with the wave.
-- ⚡ **Lightweight**: Pure CSS animations embedded inside the SVG, requiring no external JavaScript dependencies.
+- 🌊 **Diagonal Wave Reveal**: Commits fade in sequentially starting from the top-left corner, with the row above running 1 cell ahead of the row below.
+- 🎨 **Seamless Integration**: Zero background and border, letting the contribution cells blend naturally into light or dark GitHub profiles.
+- 🎬 **Multiple Animation Styles**: Choose between the classic pop-up bouncing wave (Style 1) or the clean, minimalist opacity-only fade (Style 2).
+- 🎨 **Premium Palettes**: Features 5 curated color presets (Cyberpunk, Ocean, Sunset, Classic Green, and Grayscale Mono).
+- ⚡ **Lightweight**: Pure CSS animations embedded inside the SVG, requiring no external fonts or JavaScript dependencies.
 
 ---
 
@@ -33,6 +36,7 @@ on:
   push:
     branches:
       - main
+      - master
 
 jobs:
   build:
@@ -49,7 +53,8 @@ jobs:
         with:
           github_user_name: 'VuxDucGiang' # Change to your GitHub username
           output_path: 'profile/wave-commits.svg' # Path to save the SVG
-          color_palette: 'cyberpunk' # Options: cyberpunk, ocean, sunset, classic-green
+          color_palette: 'mono' # Options: cyberpunk, ocean, sunset, classic-green, mono
+          animation_style: '2' # Options: 1 (diagonal pop-up wave), 2 (diagonal pure opacity fade)
 
       - name: Commit and Push SVG
         run: |
@@ -76,34 +81,30 @@ After the workflow runs successfully, embed the image in your `README.md` file:
 | --- | --- | --- | --- |
 | `github_user_name` | The GitHub username to retrieve contribution data for. | **Yes** | N/A |
 | `output_path` | The path where the generated SVG file should be saved. | No | `profile/wave-commits.svg` |
-| `color_palette` | The color theme of the graph card (`cyberpunk`, `ocean`, `sunset`, `classic-green`, `mono`). | No | `cyberpunk` |
+| `color_palette` | The color theme of the contribution cells (`cyberpunk`, `ocean`, `sunset`, `classic-green`, `mono`). | No | `cyberpunk` |
+| `animation_style` | The animation style preset (`1` for diagonal pop-up wave, `2` for diagonal pure opacity fade). | No | `1` |
 
 ---
 
 ## Color Palettes
 
 ### 1. Cyberpunk (Default)
-- Card Background: Space Dark (`#0b0f19`)
 - Accent: Blues, Purples, and Vibrant Pink
 - Color Steps: `#161b22` ➔ `#1e3a8a` ➔ `#3b82f6` ➔ `#8b5cf6` ➔ `#ec4899`
 
 ### 2. Ocean
-- Card Background: Deep Navy (`#020617`)
 - Accent: Sky Blues & Cyans
 - Color Steps: `#1e293b` ➔ `#0369a1` ➔ `#0284c7` ➔ `#38bdf8` ➔ `#06b6d4`
 
 ### 3. Sunset
-- Card Background: Dark Crimson (`#180808`)
 - Accent: Reds, Oranges, and Yellows
 - Color Steps: `#2d1919` ➔ `#b91c1c` ➔ `#ea580c` ➔ `#f97316` ➔ `#facc15`
 
 ### 4. Classic Green
-- Card Background: GitHub Dark (`#0d1117`)
 - Accent: Default Green tones
 - Color Steps: `#161b22` ➔ `#0e4429` ➔ `#006d32` ➔ `#26a641` ➔ `#39d353`
 
 ### 5. Mono
-- Card Background: Pitch Black (`#000000`)
 - Accent: Grayscale (Black, Grays, and White)
 - Color Steps: `#161b22` ➔ `#404040` ➔ `#737373` ➔ `#a3a3a3` ➔ `#ffffff`
 

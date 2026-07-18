@@ -8,6 +8,7 @@ USERNAME = os.environ.get("GITHUB_USER_NAME")
 OUTPUT_PATH = os.environ.get("OUTPUT_PATH", "profile/wave-commits.svg")
 TOKEN = os.environ.get("GITHUB_TOKEN")
 THEME_NAME = os.environ.get("COLOR_PALETTE", "cyberpunk").lower()
+ANIMATION_STYLE = os.environ.get("ANIMATION_STYLE", "1")
 
 if not USERNAME:
     print("[ERROR] GITHUB_USER_NAME environment variable is required.")
@@ -125,31 +126,49 @@ def get_color(count):
 svg_width = 706
 svg_height = 108
 
+if ANIMATION_STYLE == "2":
+    duration = "6s"
+    keyframes = """      0% {
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }"""
+else:
+    duration = "6s"
+    keyframes = """      0% {
+        opacity: 0;
+        transform: translateY(8px) scale(0.8);
+      }
+      20% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      90% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(8px) scale(0.8);
+      }"""
+
 svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_width} {svg_height}" width="100%" height="100%">
   <style>
     /* Keyframes for the wave sweep effect */
     @keyframes wave-reveal {{
-      0% {{
-        opacity: 0;
-        transform: translateY(8px) scale(0.8);
-      }}
-      20% {{
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }}
-      90% {{
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }}
-      100% {{
-        opacity: 0;
-        transform: translateY(8px) scale(0.8);
-      }}
+{keyframes}
     }}
     
     .cell {{
       opacity: 0;
-      animation: wave-reveal 6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+      animation: wave-reveal {duration} cubic-bezier(0.16, 1, 0.3, 1) infinite;
       transform-box: fill-box;
       transform-origin: center;
     }}
@@ -161,7 +180,7 @@ svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_widt
 for col_idx, week in enumerate(weeks):
     for day in week["contributionDays"]:
         row_idx = day["weekday"]
-        delay = (col_idx + row_idx) * 0.06  # Diagonal delay starting from top-left (0,0)
+        delay = (col_idx + row_idx) * 0.06
         count = day["contributionCount"]
         color = get_color(count)
         
